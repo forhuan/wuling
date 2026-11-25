@@ -12,7 +12,6 @@ def get_schemas(defaults):
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     @staticmethod
     @callback

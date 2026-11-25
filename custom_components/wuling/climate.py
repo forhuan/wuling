@@ -1,4 +1,5 @@
 from __future__ import annotations
+from homeassistant.const import UnitOfTemperature
 
 import logging
 
@@ -9,7 +10,6 @@ from homeassistant.components.climate import (
     ClimateEntityFeature,
     HVACMode,
     HVACAction,
-    UnitOfTemperature,
     ATTR_TEMPERATURE,
 )
 
@@ -37,7 +37,7 @@ class ClimateEntity(XEntity, BaseEntity):
     _attr_fan_mode = None
     _attr_max_temp = 33
     _attr_min_temp = 17
-    _attr_temperature_unit = UnitOfTemperature.CELSIUS
+    _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_target_temperature_step = 1
 
     @property
@@ -66,7 +66,7 @@ class ClimateEntity(XEntity, BaseEntity):
         if ATTR_TEMPERATURE in kwargs:
             num = kwargs[ATTR_TEMPERATURE]
             if ret := await self.async_ac_control(temperature=num):
-                self._attr_target_temperature = num
+                self._attr_native_target_temperature = num
         return ret
 
     async def async_set_hvac_mode(self, hvac_mode):

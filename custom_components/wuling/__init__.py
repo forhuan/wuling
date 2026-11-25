@@ -65,7 +65,7 @@ sgmwsystemversion = '10'
 class NonZeroNumberSensorConv(NumberSensorConv):
     def decode(self, coordinator, payload, value):
         if value is None or value == "" or value == "0":
-            entity_id = f"sensor.{coordinator.vin_sort}_{self.attr}"
+            entity_id = f"sensor.{coordinator.vin_sort}_{self.attr}".lower()
             state_obj = coordinator.hass.states.get(entity_id)
             if state_obj and state_obj.state not in ("unknown", "unavailable", "none", "0", ""):
                 try:
@@ -558,7 +558,7 @@ class XEntity(CoordinatorEntity):
         self._option = option or {}
         if hasattr(conv, 'option'):
             self._option.update(conv.option or {})
-        self.entity_id = f'{conv.domain}.{coordinator.vin_sort}_{conv.attr}'
+        self.entity_id = f'{conv.domain}.{coordinator.vin_sort}_{conv.attr}'.lower()
         self._attr_unique_id = f'{DOMAIN}-{self.entry.entry_id}-{self.attr}'
         self._attr_icon = self._option.get('icon')
         self._attr_device_class = self._option.get('device_class')
